@@ -97,4 +97,4 @@ jobs:
               VERSION_TAG=$GITHUB_REF_NAME
             fi
             VERSION_TAG_REF="refs/tags/${VERSION_TAG}"
-            git diff-index --quiet HEAD || git commit -m "Version and checksum update for $VERSION_TAG" && git tag --force $VERSION_TAG && git push origin master && git push origin $VERSION_TAG_REF
+            git diff-index --quiet HEAD || git commit -m "Version and checksum update for $VERSION_TAG" && git tag --force $VERSION_TAG && git push origin master && git push --force origin $VERSION_TAG_REF
