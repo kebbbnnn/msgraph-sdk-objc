@@ -56,7 +56,7 @@ jobs:
       - name: Create ZIP file
         run: zip -r -X MSGraphClientSDK.xcframework.zip MSGraphClientSDK.xcframework
       - name: Upload xcframework to release
-        uses: AButler/upload-release-assets@v2.0
+        uses: AButler/upload-release-assets@v2.0.2
         with:
           files: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -65,13 +65,13 @@ jobs:
           touch Package.swift
           echo "SPM_CHECKSUM=$(swift package compute-checksum MSGraphClientSDK.xcframework.zip)" >> $GITHUB_ENV
       - name: Setup SSH key
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: webfactory/ssh-agent@v0.7.0
         with:
               ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Update SPM repo
         run: |
-            git clone git@github.com:kebbbnnn/msgraph-sdk-objc-spm.git
-            cd msgraph-sdk-objc-spm
+            git clone git@github.com:kebbbnnn/msgraph-sdk-objc.git
+            cd msgraph-sdk-objc
             cat > Package.swift << EOF
             // swift-tools-version:5.3
             import PackageDescription
