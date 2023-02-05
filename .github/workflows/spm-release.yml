@@ -96,6 +96,5 @@ jobs:
             if [ "$VERSION_TAG" == "" ]; then
               VERSION_TAG=$GITHUB_REF_NAME
             fi
-            VERSION_TAG="${VERSION_TAG}-spm-release"
-            VERSION_TAG_REF="refs/tags/${VERSION_TAG}-spm"
+            VERSION_TAG_REF="refs/tags/${VERSION_TAG}"
             git diff-index --quiet HEAD || git commit -m "Version and checksum update for $VERSION_TAG" && git tag $VERSION_TAG && git push origin main && git push origin $VERSION_TAG_REF
