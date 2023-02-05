@@ -59,6 +59,7 @@ jobs:
         uses: AButler/upload-release-assets@v2.0
         with:
           files: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Calculate SPM checksum
         run: | 
           touch Package.swift
