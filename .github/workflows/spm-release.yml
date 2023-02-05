@@ -56,7 +56,7 @@ jobs:
       - name: Create ZIP file
         run: zip -r -X MSGraphClientSDK.xcframework.zip MSGraphClientSDK.xcframework
       - name: Upload xcframework to release
-        uses: AButler/upload-release-assets@v2.0.2
+        uses: AButler/upload-release-assets@v2.0
         with:
           files: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
