@@ -60,6 +60,7 @@ jobs:
         with:
           files: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          release-tag: $GITHUB_REF_NAME
 #       - name: Calculate SPM checksum
 #         run: | 
 #           touch Package.swift
