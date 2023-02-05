@@ -61,41 +61,42 @@ jobs:
           file: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-#       - name: Calculate SPM checksum
-#         run: | 
-#           touch Package.swift
-#           echo "SPM_CHECKSUM=$(swift package compute-checksum MSGraphClientSDK.xcframework.zip)" >> $GITHUB_ENV
-#       - name: Setup SSH key
-#         uses: webfactory/ssh-agent@v0.7.0
-#         with:
-#               ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-#       - name: Update SPM repo
-#         run: |
-#             git clone git@github.com:kebbbnnn/msgraph-sdk-objc.git
-#             cd msgraph-sdk-objc
-#             cat > Package.swift << EOF
-#             // swift-tools-version:5.3
-#             import PackageDescription
-#             let package = Package(
-#                 name: "MSGraphClientSDK",
-#                 platforms: [
-#                     .macOS(.v10_10),
-#                     .iOS(.v9)
-#                 ],
-#                 products: [
-#                     .library(
-#                         name: "MSGraphClientSDK",
-#                         targets: ["MSGraphClientSDK"]),
-#                 ],
-#                 targets: [
-#                     .binaryTarget(name: "MSGraphClientSDK", url: "https://github.com/$GITHUB_REPOSITORY/releases/download/$GITHUB_REF_NAME/MSGraphClientSDK.xcframework.zip", checksum: "$SPM_CHECKSUM") 
-#                 ]
-#             )
-#             EOF
-#             git add Package.swift
-#             VERSION_TAG=$(echo $GITHUB_REF_NAME | grep -o -E '([0-9]+\.[0-9]+\.[0-9]+)')
-#             if [ "$VERSION_TAG" == "" ]; then
-#               VERSION_TAG=$GITHUB_REF_NAME
-#             fi
-#             VERSION_TAG_REF="refs/tags/${VERSION_TAG}"
-#            git diff-index --quiet HEAD || git commit -m "Version and checksum update for $VERSION_TAG" && git tag --force $VERSION_TAG && git push origin master && git push --force origin $VERSION_TAG_REF
+      - name: Calculate SPM checksum
+        run: | 
+          touch Package.swift
+          echo "SPM_CHECKSUM=$(swift package compute-checksum MSGraphClientSDK.xcframework.zip)" >> $GITHUB_ENV
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Update SPM repo
+        run: |
+            git clone git@github.com:kebbbnnn/msgraph-sdk-objc.git
+            cd msgraph-sdk-objc
+            cat > Package.swift << EOF
+            // swift-tools-version:5.3
+            import PackageDescription
+            let package = Package(
+                name: "MSGraphClientSDK",
+                platforms: [
+                    .macOS(.v10_10),
+                    .iOS(.v9)
+                ],
+                products: [
+                    .library(
+                        name: "MSGraphClientSDK",
+                        targets: ["MSGraphClientSDK"]),
+                ],
+                targets: [
+                    .binaryTarget(name: "MSGraphClientSDK", url: "https://github.com/$GITHUB_REPOSITORY/releases/download/$GITHUB_REF_NAME/MSGraphClientSDK.xcframework.zip", checksum: "$SPM_CHECKSUM") 
+                ]
+            )
+            EOF
+            git add Package.swift
+            VERSION_TAG=$(echo $GITHUB_REF_NAME | grep -o -E '([0-9]+\.[0-9]+\.[0-9]+)')
+            if [ "$VERSION_TAG" == "" ]; then
+              VERSION_TAG=$GITHUB_REF_NAME
+            fi
+            VERSION_TAG_REF="refs/tags/${VERSION_TAG}"
+            git diff-index --quiet HEAD || git commit -m "Version and checksum update for $VERSION_TAG" && git push origin master && git push --force origin $VERSION_TAG_REF
+ #          git diff-index --quiet HEAD || git commit -m "Version and checksum update for $VERSION_TAG" && git tag --force $VERSION_TAG && git push origin master && git push --force origin $VERSION_TAG_REF
