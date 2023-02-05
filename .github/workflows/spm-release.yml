@@ -56,10 +56,9 @@ jobs:
       - name: Create ZIP file
         run: zip -r -X MSGraphClientSDK.xcframework.zip MSGraphClientSDK.xcframework
       - name: Upload xcframework to release
-        uses: svenstaro/upload-release-action@v2
+        uses: AButler/upload-release-assets@v2.0
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
+          files: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
       - name: Calculate SPM checksum
         run: | 
           touch Package.swift
