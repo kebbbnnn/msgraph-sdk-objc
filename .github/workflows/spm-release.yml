@@ -56,7 +56,7 @@ jobs:
       - name: Create ZIP file
         run: zip -r -X MSGraphClientSDK.xcframework.zip MSGraphClientSDK.xcframework
       - name: Upload xcframework to release
-        uses: svenstaro/upload-release-action@v2.4.1
+        uses: svenstaro/upload-release-action@v2
         with:
           file: ./MSGraphClientSDK/MSGraphClientSDK.xcframework.zip
           repo_token: ${{ secrets.GITHUB_TOKEN }}
